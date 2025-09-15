@@ -1,0 +1,170 @@
+:root{
+  --bg: #0f1223;
+  --card: #1b2240;
+  --accent: #6ee7ff;
+  --win: #16db65;
+  --danger: #ff5a7a;
+  --text: #edf2ff;
+  --muted: #a5b4fc;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, 'Apple Color Emoji','Segoe UI Emoji';
+  background: radial-gradient(1200px 600px at 50% -10%, #1a1f3d 0%, var(--bg) 60%);
+  color: var(--text);
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  padding: 28px 16px 48px;
+}
+
+.app{
+  width: 100%;
+  max-width: 760px;
+}
+
+.header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:18px;
+}
+.title{
+  font-size: clamp(20px, 3vw, 28px);
+  font-weight:800;
+  letter-spacing:.4px;
+}
+.badge{
+  padding:6px 10px;
+  border:1px solid #2a2f54;
+  background:#121634;
+  border-radius:999px;
+  color:var(--muted);
+  font-size:12px;
+}
+
+.board{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(86px, 1fr));
+  gap:14px;
+  width:100%;
+}
+
+.card{
+  position:relative;
+  perspective:1000px;
+  height: 140px;
+}
+
+.card-inner{
+  position:absolute; inset:0;
+  transition: transform .5s ease;
+  transform-style: preserve-3d;
+  border-radius:16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.25);
+}
+.card.flipped .card-inner, .card.matched .card-inner{ transform: rotateY(180deg); }
+
+.face{
+  position:absolute; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  backface-visibility: hidden;
+  border-radius:16px;
+  border:1px solid #2a2f54;
+}
+
+.front{ background: linear-gradient(180deg, #232a57, #121634); }
+.back{ background: linear-gradient(180deg, #a0d9ff22, #6ee7ff22);
+       transform: rotateY(180deg); font-size:44px; }
+
+.card.locked .front{ filter: brightness(.75) }
+.card.matched .back{ outline:2px solid var(--win); box-shadow: 0 0 0 3px #16db6533 inset; }
+
+.controls{
+  display:flex; align-items:center; gap:10px; margin: 18px 0 24px;
+}
+button{
+  background: #1e2a5a;
+  color: var(--text);
+  border:1px solid #2a2f54;
+  padding:10px 14px;
+  border-radius:12px;
+  font-weight:700;
+  cursor:pointer;
+  transition: transform .06s ease, background .2s ease;
+}
+button:hover{ background:#26326c }
+button:active{ transform: translateY(1px) }
+
+.score{
+  padding:10px 14px;
+  background:#121634;
+  border:1px solid #2a2f54;
+  border-radius:12px;
+  color:#b8c1ff;
+  font-weight:700;
+}
+
+.toast{
+  position: fixed;
+  left:50%;
+  transform: translateX(-50%);
+  top: 20px;
+  background: #10253b;
+  border:1px solid #2a4566;
+  padding:10px 14px;
+  border-radius: 999px;
+  font-weight:800;
+  box-shadow: 0 8px 24px rgba(0,0,0,.3);
+  animation: floatUp 900ms ease forwards;
+}
+.toast span{ margin: 0 4px; }
+@keyframes floatUp{
+  0%{ opacity:0; transform: translate(-50%, 8px); }
+  20%{ opacity:1; transform: translate(-50%, -4px); }
+  100%{ opacity:0; transform: translate(-50%, -40px); }
+}
+
+.score-bubble{
+  position:absolute;
+  right: 10px;
+  top: -8px;
+  font-size: 12px;
+  padding: 4px 8px;
+  background: #0f3a2a;
+  color:#b7ffdf;
+  border:1px solid #1c6c4f;
+  border-radius: 999px;
+  animation: pop .9s ease forwards;
+}
+@keyframes pop{
+  0%{ transform: scale(.8); opacity: 0 }
+  30%{ transform: scale(1.05); opacity: 1 }
+  100%{ transform: scale(1); opacity: 0 }
+}
+
+.modal{
+  position: fixed; inset: 0;
+  display:flex; align-items:center; justify-content:center;
+  background: rgba(5,8,20,.6);
+  backdrop-filter: blur(6px);
+}
+.modal-card{
+  width: min(92vw, 520px);
+  background: linear-gradient(180deg, #232a57, #121634);
+  border:1px solid #2a2f54;
+  border-radius: 18px;
+  padding: 22px;
+  text-align:center;
+  box-shadow: 0 20px 50px rgba(0,0,0,.35);
+}
+.modal-title{ font-size: 24px; margin: 6px 0 10px; }
+.modal-sub{ color:#b8c1ff; margin-bottom: 16px; }
+.footer{
+  display:flex; justify-content:center; gap:12px; margin-top:14px;
+}
+.small{ font-size:12px; color:#9aa4ff }
+.link{ color: var(--accent); text-decoration: none; }
